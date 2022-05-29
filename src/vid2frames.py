@@ -1,6 +1,7 @@
 from ast import Index
 import os
 from pathlib import Path
+from tabnanny import verbose
 import cv2
 import numpy as np
 import csv
@@ -42,8 +43,8 @@ class Vid2Frames:
         output = [i for i in np.arange(0, duration, (0 + duration) / fps)]
         return output
 
-    def split(self, file, video_id):
-        print("Processing:: {}".format(str(file)))
+    def split(self, file: str, video_id: int):
+        self.print("Processing:: {}".format(str(file)))
         i = 0
         _frames = 0
         video = self.read_video(file)
@@ -61,13 +62,13 @@ class Vid2Frames:
         while 1:
             is_read, frame = video.read()
             if not is_read:
-                print("No Frames")
+                self.print("No Frames")
                 break
 
             frame_due = i * (duration / fps)
             try:
                 if frame_due >= splits[0]:
-                    print("Writing Frame {} at {}".format(i, splits[0]))
+                    self.print("Writing Frame {} at {}".format(i, splits[0]))
                     cv2.imwrite("{}/{}.jpg".format(output_dir, i), frame)
                     _frames += 1
                 if len(splits) > 0:
@@ -76,7 +77,7 @@ class Vid2Frames:
                 break
             i += 1
         self.csv_write([video_id, filename, _frames])
-        print("\n")
+        self.print("\n")
         self.csv_flush()
 
     def csv_flush(self):
@@ -87,14 +88,21 @@ class Vid2Frames:
             filewriter.writerow(self.csv_header)
             filewriter.writerows(self.csv_data)
 
-    def csv_write(self, row):
+    def csv_write(self, row: list):
         self.csv_data.append(row)
 
-    def set_csv_header(self, row):
+    def set_csv_header(self, row: list):
         self.csv_header = row
 
-    def read_video(self, file):
+    def read_video(self, file: str):
         return cv2.VideoCapture(str(file))
 
-    def get_duration(self, video):
+    def get_duration(self, video: cv2.VideoCapture):
         return video.get(cv2.CAP_PROP_FRAME_COUNT) / video.get(cv2.CAP_PROP_FPS)
+
+    def set_verbose(self, verbose: bool):
+        self.verbose = verbose
+
+    def print(self, msg):
+        if verbose:
+            print(msg)
