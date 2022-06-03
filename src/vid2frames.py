@@ -1,7 +1,5 @@
-from ast import Index
 import os
 from pathlib import Path
-from tabnanny import verbose
 import cv2
 import numpy as np
 import csv
@@ -25,6 +23,7 @@ class Vid2Frames:
         self.output_root_dir_name = output_root_dir_name
         self.csv_data = []
         self.csv_header = []
+        self.verbose = False
 
     def folders_in_root(self):
         folders = os.listdir(self.root_dir)
@@ -43,20 +42,23 @@ class Vid2Frames:
         output = [i for i in np.arange(0, duration, (0 + duration) / fps)]
         return output
 
-    def split(self, file: str, video_id: int):
+    def split(self, file: str, video_id: int, force_frames=False):
         self.print("Processing:: {}".format(str(file)))
         i = 0
         _frames = 0
         video = self.read_video(file)
         video_fps = video.get(cv2.CAP_PROP_FPS)
 
-        # fps = min(self.fps, video_fps)
-        fps = self.fps
+        fps = self.fps if force_frames else min(self.fps, video_fps)
+
         splits = self.get_split_at_list(video, fps)
 
         filename = str(file).split("/")[-2]
         output_dir = "{}/{}".format(self.output_root_dir_name, video_id)
         duration = self.get_duration(video)
+        height, width = int(video.get(cv2.CAP_PROP_FRAME_HEIGHT)), int(
+            video.get(cv2.CAP_PROP_FRAME_WIDTH)
+        )
         if not os.path.isdir(output_dir):
             os.mkdir(output_dir)
         while 1:
@@ -76,7 +78,7 @@ class Vid2Frames:
             except IndexError:
                 break
             i += 1
-        self.csv_write([video_id, filename, _frames])
+        self.csv_write([video_id, filename, _frames, height, width])
         self.print("\n")
         self.csv_flush()
 
@@ -104,5 +106,5 @@ class Vid2Frames:
         self.verbose = verbose
 
     def print(self, msg):
-        if verbose:
+        if self.verbose:
             print(msg)
