@@ -4,8 +4,6 @@ import cv2
 import numpy as np
 import csv
 
-FPS = 37
-
 
 class Vid2Frames:
     def __init__(
