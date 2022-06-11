@@ -10,11 +10,11 @@ class HDF5_PRE_PROCESS_CORE:
     dataset_path = None
     dataset = None
 
-    def __init__(self, dataset_path, groups=["Train"]):
+    def __init__(self, dataset_path, groups):
         if not os.path.exists(dataset_path):
             raise FileNotFoundError
         self.dataset_path = dataset_path
-        self.groups = groups
+        self.groups = groups.split(",")
         self.error_files = []
 
     def read_bytes(self, path):
