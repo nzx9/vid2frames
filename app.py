@@ -43,7 +43,16 @@ v2f.add_argument(
     "--csv",
     required=True,
     type=str,
+    default="Outputs",
     help="Path to create csv file",
+)
+
+v2f.add_argument(
+    "-O",
+    "--out_dir",
+    required=False,
+    type=str,
+    help="Output location to save the frames, default is 'outputs'",
 )
 
 v2f.add_argument(
@@ -178,11 +187,13 @@ if __name__ == "__main__":
         csv = args.csv
         force = False if args.force is None else args.force
         verbose = False if args.verbose is None else args.verbose
+        out_dir = "outputs" if args.out_dir is None else args.out_dir
         v2f = Vid2Frames(
             root_dir=root_dir,
             no_of_frames=frames,
             input_file_extension=ext,
             csv_path=csv,
+            output_root_dir_name=out_dir,
         )
 
         folders = v2f.folders_in_root()
@@ -218,17 +229,14 @@ if __name__ == "__main__":
             0 if args.miss_frames_end is None else args.miss_frames_end
         )
 
-        def pre_process_hdf5(
-            dataset_path, groups, miss_frames_from, output_path, output_name
-        ):
-            pre_process_core = HDF5_PRE_PROCESS_CORE(
-                dataset_path=dataset_path, groups=groups
-            )
-            pre_process_core.create(
-                output_path=output_path,
-                output_name=output_name,
-                miss_frames_from=miss_frames_from,
-            )
+        pre_process_core = HDF5_PRE_PROCESS_CORE(
+            dataset_path=dataset_path, groups=groups
+        )
+        pre_process_core.create(
+            output_path=output_path,
+            output_name=output_name,
+            miss_frames_from=miss_frames_from,
+        )
 
     elif args.command == "split":
         from src.split import Split
