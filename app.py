@@ -246,7 +246,7 @@ if __name__ == "__main__":
             args.train_ratio,
             args.validate_ratio,
             args.shuffle,
-            args.include_header,
+            not args.include_header,
         )
         splitter.csv_write(args.save_dir, args.postfix)
     else:
