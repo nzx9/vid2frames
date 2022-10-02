@@ -133,3 +133,5 @@ dmypy.json
 *.mp4
 *.csv
 .vscode
+
+*.hdf5
