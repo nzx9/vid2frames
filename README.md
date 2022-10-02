@@ -10,6 +10,14 @@ Python tool to work with video datasets.
 
 ## Installation
 
+### Using `pip`
+
+```bash
+pip install vwiz
+```
+
+### Using `git`
+
 - [x] Clone the vid2frame repo from Github and navigate to the cloned directory
 
 ```bash
