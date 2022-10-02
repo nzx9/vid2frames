@@ -1,4 +1,6 @@
-# vidworks
+# vwiz 🧙
+
+> vwiz :: video wizard 🧙
 
 Python tool to work with video datasets.
 
@@ -11,8 +13,8 @@ Python tool to work with video datasets.
 - [x] Clone the vid2frame repo from Github and navigate to the cloned directory
 
 ```bash
-git clone https://github.com/nzx9/vid2frames.git
-cd vid2frames
+git clone https://github.com/nzx9/vwiz.git
+cd vwiz
 ```
 
 - [x] Create virtual environment
