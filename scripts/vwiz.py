@@ -1,3 +1,4 @@
+#! python3
 import argparse
 from tqdm import tqdm
 import sys
@@ -5,7 +6,7 @@ import sys
 cmd_parser = argparse.ArgumentParser()
 
 cmd_sub_parser = cmd_parser.add_subparsers(
-    help="vidworks available commands", dest="command", required=True
+    help="vwiz available commands", dest="command", required=True
 )
 
 v2f = cmd_sub_parser.add_parser("v2f", help="Convert videos to frames")
