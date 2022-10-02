@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="vwiz",
-    version="0.0.1",
+    version="0.0.2",
     author="Navindu Dananga",
     author_email="navindum@protonmail.com",
     license="MIT",
@@ -14,6 +14,7 @@ setuptools.setup(
     long_description_content_type="text/markdown",
     url="https://github.com/nzx9/vwiz",
     packages=setuptools.find_packages(),
+    scripts=['scripts/vwiz.py'],
     classifiers=[
         "Programming Language :: Python :: 3",
         "License :: OSI Approved :: MIT License",
