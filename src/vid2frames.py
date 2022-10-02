@@ -51,7 +51,10 @@ class Vid2Frames:
 
         splits = self.get_split_at_list(video, fps)
 
-        filename = str(file).split("/")[-2]
+        if os.name == 'nt':
+            filename = str(file).split("\\")[-2]
+        else:
+            filename = str(file).split("/")[-2]
         output_dir = "{}/{}".format(self.output_root_dir_name, video_id)
         duration = self.get_duration(video)
         height, width = int(video.get(cv2.CAP_PROP_FRAME_HEIGHT)), int(
@@ -81,7 +84,7 @@ class Vid2Frames:
         self.csv_flush()
 
     def csv_flush(self):
-        with open(self.csv_path, "w") as csvfile:
+        with open(self.csv_path, "w",  encoding="utf-8") as csvfile:
             filewriter = csv.writer(
                 csvfile, delimiter=",", quotechar="|", quoting=csv.QUOTE_MINIMAL
             )
