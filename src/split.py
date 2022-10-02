@@ -31,7 +31,7 @@ class Split:
 
         self.csv_data = []
 
-        with open(self.csv, mode="r") as file:
+        with open(self.csv, mode="r",  encoding="utf-8") as file:
             csvFile = csv.reader(file)
             self.csv_data = [lines for lines in csvFile]
             if ignore_header:
@@ -66,7 +66,7 @@ class Split:
         if path is not None:
             _path = os.path.join(path, filename)
 
-        with open(_path, "w") as csvfile:
+        with open(_path, "w",  encoding="utf-8") as csvfile:
             filewriter = csv.writer(
                 csvfile, delimiter=",", quotechar="|", quoting=csv.QUOTE_MINIMAL
             )
